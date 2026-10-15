@@ -9,7 +9,8 @@ export default function Contact() {
   const [sent, setSent] = useState(false);
 
   return (
-    <section id="contact" className="bg-ink px-6 py-32 text-white">
+    <section id="contact" className="scroll-mt-4 bg-paper px-3 sm:px-4">
+      <div className="min-h-[calc(100dvh-3rem)] rounded-3xl bg-ink px-6 py-32 text-white sm:px-10">
       <h2 className="font-display text-[clamp(2.5rem,8vw,7rem)] font-bold uppercase leading-none">
         Contact
       </h2>
@@ -90,6 +91,7 @@ export default function Contact() {
             </button>
           </form>
         )}
+      </div>
       </div>
     </section>
   );

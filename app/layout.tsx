@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Space_Grotesk, Inter, Outfit } from "next/font/google";
 import SmoothScroll from "./components/SmoothScroll";
 import Header from "./components/Header";
+import Footer from "./components/Footer";
 import "./globals.css";
 
 const spaceGrotesk = Space_Grotesk({
@@ -44,6 +45,7 @@ export default function RootLayout({
         <SmoothScroll>
           <Header />
           <main id="main">{children}</main>
+          <Footer />
         </SmoothScroll>
       </body>
     </html>
