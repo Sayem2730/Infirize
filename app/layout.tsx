@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Space_Grotesk, Inter } from "next/font/google";
+import { Space_Grotesk, Inter, Outfit } from "next/font/google";
 import SmoothScroll from "./components/SmoothScroll";
 import Header from "./components/Header";
 import "./globals.css";
@@ -14,6 +14,11 @@ const inter = Inter({
   variable: "--font-inter",
 });
 
+const outfit = Outfit({
+  subsets: ["latin"],
+  variable: "--font-outfit",
+});
+
 export const metadata: Metadata = {
   title: "InfirizeTech",
   description: "InfirizeTech builds websites and software that last.",
@@ -25,7 +30,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${spaceGrotesk.variable} ${inter.variable}`}>
+    <html
+      lang="en"
+      className={`${spaceGrotesk.variable} ${inter.variable} ${outfit.variable}`}
+    >
       <body>
         <a
           href="#main"
