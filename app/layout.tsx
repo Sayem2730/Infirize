@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Space_Grotesk, Inter } from "next/font/google";
 import SmoothScroll from "./components/SmoothScroll";
+import Header from "./components/Header";
 import "./globals.css";
 
 const spaceGrotesk = Space_Grotesk({
@@ -14,8 +15,8 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "MicroNest",
-  description: "We build websites people remember.",
+  title: "InfirizeTech",
+  description: "InfirizeTech builds websites and software that last.",
 };
 
 export default function RootLayout({
@@ -28,11 +29,12 @@ export default function RootLayout({
       <body>
         <a
           href="#main"
-          className="sr-only focus:not-sr-only focus:absolute focus:p-3"
+          className="sr-only focus:not-sr-only focus:absolute focus:z-[60] focus:bg-white focus:p-3"
         >
           Skip to content
         </a>
         <SmoothScroll>
+          <Header />
           <main id="main">{children}</main>
         </SmoothScroll>
       </body>

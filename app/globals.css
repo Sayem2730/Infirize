@@ -37,3 +37,9 @@ html.lenis body {
 .lenis.lenis-stopped {
   overflow: hidden;
 }
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
