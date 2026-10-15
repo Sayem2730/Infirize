@@ -1,36 +1,60 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# InfirizeTech Website
 
-## Getting Started
+A bold, modern agency website built with Next.js, Tailwind CSS, Lenis smooth scroll and 3D elements, for InfirizeTech.
 
-First, run the development server:
+## Tech stack
+
+- Next.js (App Router) + TypeScript
+- Tailwind CSS
+- Lenis (smooth scrolling)
+- GSAP (animation)
+- Three.js, @react-three/fiber, @react-three/drei (3D shapes)
+
+## Getting started
+
+Requirements: Node.js 20 or newer.
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open http://localhost:3000 in your browser.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Project structure
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```
+app/
+  components/     Reusable UI (SmoothScroll, menu, hero, 3D shapes)
+  globals.css     Color variables and base styles
+  layout.tsx      Fonts, skip link and smooth scroll wrapper
+  page.tsx        Home page
+public/           Images and static files
+```
 
-## Learn More
+## Customizing the brand
 
-To learn more about Next.js, take a look at the following resources:
+Colors live in one place, `app/globals.css`:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```css
+:root {
+  --c-accent: #3d5afe;
+  --c-ink: #0b1020;
+  --c-white: #ffffff;
+}
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Change these values and the whole site updates.
 
-## Deploy on Vercel
+## Scripts
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+| Command         | What it does                  |
+| --------------- | ----------------------------- |
+| `npm run dev`   | Start the dev server          |
+| `npm run build` | Create a production build     |
+| `npm run start` | Run the production build      |
+| `npm run lint`  | Check the code with ESLint    |
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## License
+
+All rights reserved.
