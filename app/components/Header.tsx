@@ -111,7 +111,7 @@ export default function Header() {
             dark ? "text-white" : "text-ink"
           }`}
         >
-          InfirizeTech
+          Infirize
         </a>
 
         <div className="pointer-events-auto flex items-center gap-2">

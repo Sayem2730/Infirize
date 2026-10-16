@@ -37,10 +37,10 @@ export default function Hero() {
           <span>
             <span className="text-white/60">Say hello: </span>
             <a
-              href="mailto:hello@yourdomain.com"
+              href="mailto:info.infirize@gmail.com"
               className="pointer-events-auto underline-offset-4 hover:underline"
             >
-              hello@yourdomain.com
+              info.infirize@gmail.com
             </a>
           </span>
         </div>

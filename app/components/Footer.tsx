@@ -32,7 +32,7 @@ export default function Footer() {
               href="#main"
               className="font-display text-2xl font-bold tracking-tight"
             >
-              InfirizeTech
+              Infirize
             </a>
           </div>
 
@@ -62,8 +62,8 @@ export default function Footer() {
             <div>
               <p className="text-[11px] text-white/50">Contact us</p>
               {/* TODO: replace with your real email */}
-              <a href="mailto:hello@yourdomain.com" className={link}>
-                hello@yourdomain.com
+              <a href="mailto:info.infirize@gmail.com" className={link}>
+                info.infirize@gmail.com
               </a>
             </div>
             <div>
