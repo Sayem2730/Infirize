@@ -5,14 +5,16 @@ import type { SupabaseClient } from "@supabase/supabase-js";
 import ProjectsManager from "./ProjectsManager";
 import MessagesInbox from "./MessagesInbox";
 import AlertsManager from "./AlertsManager";
+import ServicesManager from "./ServicesManager";
 
-type Tab = "overview" | "projects" | "messages" | "alerts";
+type Tab = "overview" | "projects" | "messages" | "alerts" | "services";
 type Toast = { name: string; text: string };
 
 const icons = {
   overview: "M3 11l9-8 9 8v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z",
   projects: "M4 5h16v14H4zM4 16l5-5 4 4 3-3 4 4",
   messages: "M3 6h18v12H3zM3 7l9 7 9-7",
+  services: "M4 4h7v7H4zM13 4h7v7h-7zM4 13h7v7H4zM13 13h7v7h-7z",
   alerts: "M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9M10.3 21a1.94 1.94 0 0 0 3.4 0",
 };
 
@@ -104,6 +106,7 @@ export default function Dashboard({ db, email }: { db: SupabaseClient; email: st
     { id: "overview", label: "Overview" },
     { id: "projects", label: "Projects" },
     { id: "messages", label: "Messages", badge: counts.unread },
+    { id: "services", label: "Services" },
     { id: "alerts", label: "Email alerts" },
   ];
 
@@ -208,6 +211,7 @@ export default function Dashboard({ db, email }: { db: SupabaseClient; email: st
           {tab === "messages" && (
             <MessagesInbox key={counts.messages} db={db} onChange={refresh} />
           )}
+          {tab === "services" && <ServicesManager db={db} />}
           {tab === "alerts" && <AlertsManager db={db} />}
         </div>
       </main>
