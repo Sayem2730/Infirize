@@ -1,17 +1,27 @@
 @import "tailwindcss";
 
 :root {
-  --c-accent: #3d5afe;
-  --c-ink: #0b1020;
-  --c-white: #ffffff;
+  --c-accent: #0a84ff; /* electric blue: hero, buttons, links on light */
+  --c-accent-2: #087bff; /* main blue: gradients, large text only */
+  --c-glow: #00d9ff; /* cyan: highlights on dark backgrounds only */
+  --c-ink: #0a0c0f; /* charcoal */
+  --c-white: #f0f2f5; /* silver page background */
+  --gradient-brand: linear-gradient(115deg, #243bff, #087bff, #00d9ff);
 }
 
 @theme inline {
   --color-accent: var(--c-accent);
+  --color-accent-2: var(--c-accent-2);
+  --color-glow: var(--c-glow);
   --color-ink: var(--c-ink);
   --color-paper: var(--c-white);
   --font-display: var(--font-space-grotesk);
   --font-sans: var(--font-inter);
+}
+
+/* Use as class="bg-brand" for the full logo gradient */
+@utility bg-brand {
+  background-image: var(--gradient-brand);
 }
 
 html {

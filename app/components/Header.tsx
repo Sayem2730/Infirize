@@ -157,7 +157,7 @@ export default function Header() {
                 <a
                   href={link.href}
                   onClick={() => setOpen(false)}
-                  className="group flex items-baseline gap-4 font-display text-[clamp(2.5rem,9vw,7rem)] font-bold uppercase leading-none transition-colors hover:text-accent"
+                  className="group flex items-baseline gap-4 font-display text-[clamp(2.5rem,9vw,7rem)] font-bold uppercase leading-none transition-colors hover:text-glow"
                 >
                   <span className="text-sm font-normal text-white/40">
                     0{i + 1}
