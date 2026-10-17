@@ -2,7 +2,9 @@
 
 import { useEffect, useRef } from "react";
 
-const services = [
+type ServiceItem = { no: string; title: string; text: string; glyph: string };
+
+const fallbackServices: ServiceItem[] = [
   {
     no: "01",
     title: "Web development",
@@ -29,8 +31,6 @@ const services = [
   },
 ];
 
-// Extra scroll after the last card lands, so it holds for a moment
-const SPAN = services.length + 0.3;
 // How many viewport heights of scrolling each card gets
 const VH_PER_CARD = 85;
 
@@ -38,7 +38,10 @@ const clamp = (v: number, min: number, max: number) =>
   Math.min(max, Math.max(min, v));
 const easeOut = (t: number) => 1 - Math.pow(1 - t, 3);
 
-export default function Services() {
+export default function Services({ items }: { items?: ServiceItem[] }) {
+  const services: ServiceItem[] = items ?? fallbackServices;
+  // Extra scroll after the last card lands, so it holds for a moment
+  const SPAN = services.length + 0.3;
   const trackRef = useRef<HTMLDivElement>(null);
   const cardRefs = useRef<(HTMLElement | null)[]>([]);
 
@@ -104,7 +107,7 @@ export default function Services() {
       window.removeEventListener("resize", onResize);
       if (frame) cancelAnimationFrame(frame);
     };
-  }, []);
+  }, [SPAN]);
 
   return (
     <section id="services" className="bg-paper px-3 pb-3 sm:px-4 sm:pb-4">

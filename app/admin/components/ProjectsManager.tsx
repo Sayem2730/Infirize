@@ -188,12 +188,19 @@ export default function ProjectsManager({
   const [editing, setEditing] = useState<Draft | null>(null);
   const [confirmId, setConfirmId] = useState<string | null>(null);
 
-  const load = useCallback(async () => {
-    const { data, error } = await db.from("projects").select("*").order("sort_order");
-    if (error) setError(error.message);
-    else setProjects(data as Project[]);
-    setLoading(false);
-  }, [db]);
+  const load = useCallback(
+    () =>
+      db
+        .from("projects")
+        .select("*")
+        .order("sort_order")
+        .then(({ data, error }) => {
+          if (error) setError(error.message);
+          else setProjects(data as Project[]);
+          setLoading(false);
+        }),
+    [db],
+  );
 
   useEffect(() => {
     load();
@@ -233,9 +240,14 @@ export default function ProjectsManager({
     const next = [...projects];
     [next[i], next[i + dir]] = [next[i + dir], next[i]];
     setProjects(next);
-    await Promise.all(
+    const results = await Promise.all(
       next.map((p, idx) => db.from("projects").update({ sort_order: idx + 1 }).eq("id", p.id)),
     );
+    const failed = results.find((r) => r.error);
+    if (failed?.error) {
+      setError(failed.error.message);
+      load();
+    }
   }
 
   async function togglePublished(p: Project) {

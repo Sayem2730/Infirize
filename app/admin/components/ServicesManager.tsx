@@ -20,12 +20,19 @@ export default function ServicesManager({ db }: { db: SupabaseClient }) {
   const [saving, setSaving] = useState(false);
   const [confirmId, setConfirmId] = useState<string | null>(null);
 
-  const load = useCallback(async () => {
-    const { data, error } = await db.from("services").select("*").order("sort_order");
-    if (error) setError(error.message);
-    else setItems(data as Service[]);
-    setLoading(false);
-  }, [db]);
+  const load = useCallback(
+    () =>
+      db
+        .from("services")
+        .select("*")
+        .order("sort_order")
+        .then(({ data, error }) => {
+          if (error) setError(error.message);
+          else setItems(data as Service[]);
+          setLoading(false);
+        }),
+    [db],
+  );
 
   useEffect(() => {
     load();

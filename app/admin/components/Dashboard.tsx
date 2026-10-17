@@ -39,25 +39,27 @@ export default function Dashboard({ db, email }: { db: SupabaseClient; email: st
   const [tab, setTab] = useState<Tab>("overview");
   const [counts, setCounts] = useState({ projects: 0, unread: 0, messages: 0 });
   const [toast, setToast] = useState<Toast | null>(null);
-  const [perm, setPerm] = useState<NotificationPermission | "unsupported">("default");
+  // Desktop notification permission. The dashboard only renders in the browser
+  // (after the session check), so reading Notification here is safe.
+  const [perm, setPerm] = useState<NotificationPermission | "unsupported">(() =>
+    typeof Notification === "undefined" ? "unsupported" : Notification.permission,
+  );
 
-  const refresh = useCallback(async () => {
-    const [p, u, m] = await Promise.all([
-      db.from("projects").select("id", { count: "exact", head: true }),
-      db.from("messages").select("id", { count: "exact", head: true }).eq("read", false),
-      db.from("messages").select("id", { count: "exact", head: true }),
-    ]);
-    setCounts({ projects: p.count ?? 0, unread: u.count ?? 0, messages: m.count ?? 0 });
-  }, [db]);
+  const refresh = useCallback(
+    () =>
+      Promise.all([
+        db.from("projects").select("id", { count: "exact", head: true }),
+        db.from("messages").select("id", { count: "exact", head: true }).eq("read", false),
+        db.from("messages").select("id", { count: "exact", head: true }),
+      ]).then(([p, u, m]) => {
+        setCounts({ projects: p.count ?? 0, unread: u.count ?? 0, messages: m.count ?? 0 });
+      }),
+    [db],
+  );
 
   useEffect(() => {
     refresh();
   }, [refresh]);
-
-  // Desktop notification permission (browser only)
-  useEffect(() => {
-    setPerm(typeof Notification === "undefined" ? "unsupported" : Notification.permission);
-  }, []);
 
   // Live alerts: runs whenever a new message is saved
   useEffect(() => {

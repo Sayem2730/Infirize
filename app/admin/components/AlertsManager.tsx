@@ -23,12 +23,19 @@ export default function AlertsManager({ db }: { db: SupabaseClient }) {
   const [testing, setTesting] = useState(false);
   const [testMsg, setTestMsg] = useState<{ ok: boolean; text: string } | null>(null);
 
-  const load = useCallback(async () => {
-    const { data, error } = await db.from("notify_emails").select("*").order("created_at");
-    if (error) setError(error.message);
-    else setItems(data as Recipient[]);
-    setLoading(false);
-  }, [db]);
+  const load = useCallback(
+    () =>
+      db
+        .from("notify_emails")
+        .select("*")
+        .order("created_at")
+        .then(({ data, error }) => {
+          if (error) setError(error.message);
+          else setItems(data as Recipient[]);
+          setLoading(false);
+        }),
+    [db],
+  );
 
   const call = useCallback(
     async (action: "status" | "test") => {

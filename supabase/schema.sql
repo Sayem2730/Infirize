@@ -37,6 +37,15 @@ create table if not exists public.messages (
   created_at timestamptz not null default now()
 );
 
+-- People who get an email when a contact message arrives (admin only).
+create table if not exists public.notify_emails (
+  id uuid primary key default gen_random_uuid(),
+  email text not null unique,
+  label text not null default '',
+  active boolean not null default true,
+  created_at timestamptz not null default now()
+);
+
 create or replace function public.is_admin() returns boolean
 language sql stable as $$
   select coalesce(auth.jwt() ->> 'email', '') = 'ADMIN_EMAIL_HERE'
@@ -46,10 +55,25 @@ alter table public.site_content enable row level security;
 alter table public.services enable row level security;
 alter table public.projects enable row level security;
 alter table public.messages enable row level security;
+alter table public.notify_emails enable row level security;
 
 grant select on public.site_content, public.services, public.projects to anon, authenticated;
 grant insert on public.messages to anon;
-grant all on public.site_content, public.services, public.projects, public.messages to authenticated;
+grant all on public.site_content, public.services, public.projects, public.messages, public.notify_emails to authenticated;
+
+drop policy if exists "admin manage notify emails" on public.notify_emails;
+create policy "admin manage notify emails" on public.notify_emails for all to authenticated using (public.is_admin()) with check (public.is_admin());
+
+-- Live "new message" alerts in the dashboard need messages in the realtime publication.
+do $$
+begin
+  if not exists (
+    select 1 from pg_publication_tables
+    where pubname = 'supabase_realtime' and schemaname = 'public' and tablename = 'messages'
+  ) then
+    alter publication supabase_realtime add table public.messages;
+  end if;
+end $$;
 
 drop policy if exists "public read content" on public.site_content;
 create policy "public read content" on public.site_content for select to anon, authenticated using (true);

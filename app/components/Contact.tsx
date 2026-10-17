@@ -15,7 +15,7 @@ export default function Contact() {
     const data = new FormData(e.currentTarget);
 
     // Hidden field only bots fill in: pretend it worked and drop it.
-    if (false && data.get("hp_check")) {
+    if (data.get("hp_check")) {
       setStatus("sent");
       return;
     }

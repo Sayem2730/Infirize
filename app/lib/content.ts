@@ -23,3 +23,14 @@ export async function getProjects(): Promise<Project[] | null> {
   if (error) return null;
   return data as Project[];
 }
+
+export type ServiceRow = { id: string; title: string; text: string; sort_order: number };
+
+// Same as getProjects: fresh read, null when Supabase is not set up or fails.
+export async function getServices(): Promise<ServiceRow[] | null> {
+  const db = serverClient();
+  if (!db) return null;
+  const { data, error } = await db.from("services").select("*").order("sort_order");
+  if (error) return null;
+  return data as ServiceRow[];
+}

@@ -17,15 +17,19 @@ export default function MessagesInbox({
   const [openId, setOpenId] = useState<string | null>(null);
   const [confirm, setConfirm] = useState(false);
 
-  const load = useCallback(async () => {
-    const { data, error } = await db
-      .from("messages")
-      .select("*")
-      .order("created_at", { ascending: false });
-    if (error) setError(error.message);
-    else setItems(data as Message[]);
-    setLoading(false);
-  }, [db]);
+  const load = useCallback(
+    () =>
+      db
+        .from("messages")
+        .select("*")
+        .order("created_at", { ascending: false })
+        .then(({ data, error }) => {
+          if (error) setError(error.message);
+          else setItems(data as Message[]);
+          setLoading(false);
+        }),
+    [db],
+  );
 
   useEffect(() => {
     load();
