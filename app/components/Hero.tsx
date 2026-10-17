@@ -16,8 +16,8 @@ export default function Hero() {
         <div className="pointer-events-none relative z-10 h-full px-6 pt-28 sm:px-10 sm:pt-32">
           <HeroHeadline rows={rows} />
 
-          <p className="absolute right-6 top-[62%] w-56 text-xs leading-relaxed text-white/80 sm:right-10 sm:w-72">
-            InfirizeTech is a web and software studio. We design and build
+          <p className="absolute bottom-24 right-6 w-56 text-xs leading-relaxed text-white/80 sm:bottom-28 sm:right-10 sm:w-72">
+            Infirize is a web and software studio. We design and build
             fast, modern websites and apps for founders and growing teams.
           </p>
         </div>
