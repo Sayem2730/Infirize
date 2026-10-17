@@ -45,12 +45,10 @@ export default function About() {
     const words1 = Array.from(first.querySelectorAll<HTMLElement>("[data-w]"));
     const words2 = Array.from(second.querySelectorAll<HTMLElement>("[data-w]"));
     let frame = 0;
+    let progress = 0;
 
     const update = () => {
-      frame = 0;
-      const rect = section.getBoundingClientRect();
-      const total = rect.height - window.innerHeight;
-      const p = total > 0 ? clamp(-rect.top / total) : 0;
+      const p = progress * 0.85;
       const move = mq.matches ? 0 : 1;
 
       words1.forEach((el, i) => {
@@ -81,25 +79,31 @@ export default function About() {
       if (d1) d1.style.opacity = p < 0.5 ? "0.25" : "1";
     };
 
-    const schedule = () => {
-      if (!frame) frame = requestAnimationFrame(update);
+    const HOLD = 4500; // ms each slide stays
+    const TRANS = 1400; // ms for the crossfade
+    const CYCLE = (HOLD + TRANS) * 2;
+    const ease = (t: number) => 1 - Math.pow(1 - t, 3);
+    const start = performance.now();
+
+    const tick = (now: number) => {
+      const t = (now - start) % CYCLE;
+      if (t < HOLD) progress = 0;
+      else if (t < HOLD + TRANS) progress = ease((t - HOLD) / TRANS);
+      else if (t < HOLD * 2 + TRANS) progress = 1;
+      else progress = 1 - ease((t - HOLD * 2 - TRANS) / TRANS);
+      update();
+      frame = requestAnimationFrame(tick);
     };
 
-    update();
-    window.addEventListener("scroll", schedule, { passive: true });
-    window.addEventListener("resize", schedule);
-    return () => {
-      window.removeEventListener("scroll", schedule);
-      window.removeEventListener("resize", schedule);
-      if (frame) cancelAnimationFrame(frame);
-    };
+    frame = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(frame);
   }, []);
 
   const textClass =
     "relative col-start-1 row-start-1 max-w-5xl text-center font-[family-name:var(--font-outfit)] text-[clamp(1.9rem,5.2vw,4.6rem)] font-normal leading-[1.06] tracking-tight";
 
   return (
-    <section ref={sectionRef} id="about" className="relative h-[300dvh] bg-paper">
+    <section ref={sectionRef} id="about" className="relative h-dvh bg-paper">
       <div className="sticky top-0 h-dvh p-4 sm:p-6">
         <div className="relative grid h-full place-items-center overflow-hidden rounded-3xl bg-ink/5 px-6 text-ink">
           {/* Blueprint grid */}
