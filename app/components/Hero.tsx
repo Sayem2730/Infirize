@@ -1,3 +1,7 @@
+import { Suspense } from "react";
+import ProjectCount from "./ProjectCount";
+import { Suspense } from "react";
+import ProjectCount from "./ProjectCount";
 import CoinField from "./CoinField";
 import HeroHeadline from "./HeroHeadline";
 
@@ -11,7 +15,13 @@ export default function Hero() {
   return (
     <section className="bg-paper p-3 sm:p-4">
       <div className="relative h-[calc(100dvh-1.5rem)] min-h-[600px] overflow-hidden rounded-3xl bg-accent text-white sm:h-[calc(100dvh-2rem)]">
-        <CoinField floorOffset={56} />
+        <Suspense fallback={null}>
+        <ProjectCount />
+      </Suspense>
+      <Suspense fallback={null}>
+        <ProjectCount />
+      </Suspense>
+      <CoinField floorOffset={56} />
 
         <div className="pointer-events-none relative z-10 h-full px-6 pt-28 sm:px-10 sm:pt-32">
           <HeroHeadline rows={rows} />
