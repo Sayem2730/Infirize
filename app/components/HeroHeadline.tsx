@@ -49,10 +49,10 @@ export default function HeroHeadline({ rows }: { rows: string[][] }) {
           const dx = cx - pointer.x;
           const dy = cy - pointer.y;
           const d = Math.hypot(dx, dy) || 0.001;
-          const R = Math.max(140, rect.height * 1.5);
+          const R = Math.max(500, rect.height * 4);
           const f = Math.pow(Math.max(0, 1 - d / R), 2);
           if (f > 0) {
-            const push = rect.height * 0.22 * f;
+            const push = rect.height * 0.5 * f;
             tx = (dx / d) * push;
             ty = (dy / d) * push;
             ts = 1 + f * 0.2;
