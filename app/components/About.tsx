@@ -5,7 +5,7 @@ import { useEffect, useRef } from "react";
 const FIRST =
   "We design and build fast, beautiful websites and software that turn visitors into customers.";
 const SECOND =
-  "From first sketch to live launch, one small team handles the design, the code and everything in between.";
+  "Building websites. Solving business problems, one launch at a time.";
 
 const clamp = (v: number, min = 0, max = 1) => Math.min(max, Math.max(min, v));
 
